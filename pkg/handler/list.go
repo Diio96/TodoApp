@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func (h *Handler) createList(c *gin.Context){
+func (h *Handler) createList(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -33,7 +33,7 @@ type getAllListsResponse struct {
 	Data []todo.TodoList `json:"data"`
 }
 
-func (h *Handler) getAllLists(c *gin.Context){
+func (h *Handler) getAllLists(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -48,13 +48,13 @@ func (h *Handler) getAllLists(c *gin.Context){
 	})
 }
 
-func (h *Handler) getListById(c *gin.Context){
+func (h *Handler) getListById(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
 		return
 	}
 	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil{
+	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
@@ -67,13 +67,13 @@ func (h *Handler) getListById(c *gin.Context){
 	c.JSON(http.StatusOK, list)
 }
 
-func (h *Handler) updateList(c *gin.Context){
+func (h *Handler) updateList(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
 		return
 	}
 	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil{
+	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
@@ -93,13 +93,13 @@ func (h *Handler) updateList(c *gin.Context){
 	})
 }
 
-func (h *Handler) deleteList(c *gin.Context){
+func (h *Handler) deleteList(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
 		return
 	}
 	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil{
+	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
@@ -111,6 +111,6 @@ func (h *Handler) deleteList(c *gin.Context){
 	}
 
 	c.JSON(http.StatusOK, statusResponse{
-	Status: "OK",
+		Status: "OK",
 	})
 }

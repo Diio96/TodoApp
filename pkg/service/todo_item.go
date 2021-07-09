@@ -2,16 +2,16 @@ package service
 
 import (
 	"github.com/Diio96/todo-app"
-	"github.com/Diio96/todo-app/repository"
+	repository2 "github.com/Diio96/todo-app/pkg/repository"
 )
 
 type TodoItemService struct {
-	repo repository.TodoItem
-	listRepo repository.TodoList
+	repo     repository2.TodoItem
+	listRepo repository2.TodoList
 }
 
-func NewTodoItemService(repo repository.TodoItem, listRepo repository.TodoList) *TodoItemService {
-	return &TodoItemService{ repo: repo, listRepo: listRepo}
+func NewTodoItemService(repo repository2.TodoItem, listRepo repository2.TodoList) *TodoItemService {
+	return &TodoItemService{repo: repo, listRepo: listRepo}
 }
 
 func (s *TodoItemService) Create(userId, listId int, item todo.TodoItem) (int, error) {
@@ -30,10 +30,10 @@ func (s *TodoItemService) GetById(userId, itemId int) (todo.TodoItem, error) {
 	return s.repo.GetById(userId, itemId)
 }
 
-func (s *TodoItemService) Delete(userId, itemId int) error{
+func (s *TodoItemService) Delete(userId, itemId int) error {
 	return s.repo.Delete(userId, itemId)
 }
 
-func (s *TodoItemService) Update(userId, itemId int, input todo.UpdateItemInput) error{
+func (s *TodoItemService) Update(userId, itemId int, input todo.UpdateItemInput) error {
 	return s.repo.Update(userId, itemId, input)
 }

@@ -1,19 +1,19 @@
 package handler
 
 import (
-	"github.com/Diio96/todo-app/service"
+	service2 "github.com/Diio96/todo-app/pkg/service"
 	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
-	services *service.Service
+	services *service2.Service
 }
 
-func NewHandler(services *service.Service) *Handler{
+func NewHandler(services *service2.Service) *Handler {
 	return &Handler{services: services}
 }
 
-func (h *Handler) InitRoutes() *gin.Engine{
+func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
 	auth := router.Group("/auth")

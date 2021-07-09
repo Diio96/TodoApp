@@ -13,7 +13,7 @@ func (h *Handler) createItem(c *gin.Context) {
 		return
 	}
 	listId, err := strconv.Atoi(c.Param("id"))
-	if err != nil{
+	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
@@ -40,7 +40,7 @@ func (h *Handler) getAllItems(c *gin.Context) {
 		return
 	}
 	listId, err := strconv.Atoi(c.Param("id"))
-	if err != nil{
+	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
@@ -75,7 +75,7 @@ func (h *Handler) updateItem(c *gin.Context) {
 		return
 	}
 	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil{
+	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}

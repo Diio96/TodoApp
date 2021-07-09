@@ -9,7 +9,7 @@ import (
 
 const (
 	authorizationHeader = "Authorization"
-	userCtx = "userId"
+	userCtx             = "userId"
 )
 
 func (h *Handler) userIdentity(c *gin.Context) {
@@ -38,13 +38,12 @@ func getUserId(c *gin.Context) (int, error) {
 	if !ok {
 		newErrorResponse(c, http.StatusInternalServerError, "user id not found")
 		return 0, errors.New("users id not found")
-
 	}
+
 	idInt, ok := id.(int)
 	if !ok {
 		newErrorResponse(c, http.StatusInternalServerError, "user id is of invalid type")
 		return 0, errors.New("user id not found")
 	}
-
 	return idInt, nil
 }

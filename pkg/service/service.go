@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/Diio96/todo-app"
-	"github.com/Diio96/todo-app/repository"
+	repository2 "github.com/Diio96/todo-app/pkg/repository"
 )
 
 type Authorization interface {
@@ -25,7 +25,6 @@ type TodoItem interface {
 	GetById(userId, itemId int) (todo.TodoItem, error)
 	Delete(userId, itemId int) error
 	Update(userId, itemId int, input todo.UpdateItemInput) error
-
 }
 
 type Service struct {
@@ -34,10 +33,10 @@ type Service struct {
 	TodoItem
 }
 
-func NewService(repos *repository.Repository) *Service {
+func NewService(repos *repository2.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
-		TodoList: NewTodoListService(repos.TodoList),
-		TodoItem: NewTodoItemService(repos.TodoItem, repos.TodoList),
+		TodoList:      NewTodoListService(repos.TodoList),
+		TodoItem:      NewTodoItemService(repos.TodoItem, repos.TodoList),
 	}
 }

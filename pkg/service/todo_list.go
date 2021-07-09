@@ -2,14 +2,14 @@ package service
 
 import (
 	"github.com/Diio96/todo-app"
-	"github.com/Diio96/todo-app/repository"
+	repository2 "github.com/Diio96/todo-app/pkg/repository"
 )
 
 type TodoListService struct {
-	repo repository.TodoList
+	repo repository2.TodoList
 }
 
-func NewTodoListService(repo repository.TodoList) *TodoListService {
+func NewTodoListService(repo repository2.TodoList) *TodoListService {
 	return &TodoListService{repo: repo}
 }
 
@@ -29,7 +29,7 @@ func (s *TodoListService) Delete(userId, listId int) error {
 	return s.repo.Delete(userId, listId)
 }
 
-func (s *TodoListService) Update(userId, listId int, input todo.UpdateListInput) error{
+func (s *TodoListService) Update(userId, listId int, input todo.UpdateListInput) error {
 	if err := input.Validate(); err != nil {
 		return err
 	}

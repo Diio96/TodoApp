@@ -11,7 +11,7 @@ type TodoItemPostgres struct {
 	db *sqlx.DB
 }
 
-func NewTodoItemPostgres(db *sqlx.DB) *TodoItemPostgres{
+func NewTodoItemPostgres(db *sqlx.DB) *TodoItemPostgres {
 	return &TodoItemPostgres{db: db}
 }
 
@@ -43,7 +43,7 @@ func (r *TodoItemPostgres) GetAll(userId, listId int) ([]todo.TodoItem, error) {
 	var items []todo.TodoItem
 	query := fmt.Sprintf(`SELECT ti.id, ti.title, ti.description, ti.done FROM %s ti INNER JOIN %s li on li.item_id = ti.id
 								INNER JOIN %s ul on ul.list_id = li.list_id WHERE li.list_id = $1 AND ul.user_id = $2`,
-								todoItemsTable, listsItemsTable, usersListsTable)
+		todoItemsTable, listsItemsTable, usersListsTable)
 	if err := r.db.Select(&items, query, listId, userId); err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (r *TodoItemPostgres) GetById(userId, itemId int) (todo.TodoItem, error) {
 func (r *TodoItemPostgres) Delete(userId, itemId int) error {
 	query := fmt.Sprintf(`DELETE FROM %s ti USING %s li, %s ul 
 								WHERE ti.id = li.item_id AND li.list_id = ul.list_id AND ul.user_id = $1 AND ti.id = $2`,
-								todoItemsTable, listsItemsTable, usersListsTable)
+		todoItemsTable, listsItemsTable, usersListsTable)
 	_, err := r.db.Exec(query, userId, itemId)
 	return err
 }

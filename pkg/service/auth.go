@@ -5,15 +5,15 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Diio96/todo-app"
-	"github.com/Diio96/todo-app/repository"
+	repository2 "github.com/Diio96/todo-app/pkg/repository"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
 
 const (
-	salt = "hjsdqweAVXV123^*&@$"
+	salt       = "hjsdqweAVXV123^*&@$"
 	signingKey = "asd!##@AFSF1275"
-	tokenTTL = 12 * time.Hour
+	tokenTTL   = 12 * time.Hour
 )
 
 type tokenClaims struct {
@@ -22,20 +22,20 @@ type tokenClaims struct {
 }
 
 type AuthService struct {
-	repo repository.Authorization
+	repo repository2.Authorization
 }
 
-func NewAuthService(repo repository.Authorization) *AuthService {
+func NewAuthService(repo repository2.Authorization) *AuthService {
 	return &AuthService{repo: repo}
 }
 
-func (s *AuthService) CreateUser(user todo.User) (int, error){
+func (s *AuthService) CreateUser(user todo.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }
 
 func (s *AuthService) ParseToken(accessToken string) (int, error) {
-	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func (token *jwt.Token) (interface{}, error){
+	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")
 		}
@@ -60,14 +60,14 @@ func (s *AuthService) GenerateToken(username, password string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(tokenTTL).Unix(),
-			IssuedAt: time.Now().Unix(),
+			IssuedAt:  time.Now().Unix(),
 		},
 		user.Id,
 	})
 	return token.SignedString([]byte(signingKey))
 }
 
-func generatePasswordHash(password string) string{
+func generatePasswordHash(password string) string {
 	hash := sha1.New()
 	hash.Write([]byte(password))
 	return fmt.Sprintf("%x", hash.Sum([]byte(salt)))
